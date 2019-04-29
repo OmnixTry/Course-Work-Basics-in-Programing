@@ -5,12 +5,12 @@ using namespace std;
 class systema {
 private:
 	string variables;
-	int **arr;
+	float **arr;
 	int height;
 	int length;
 public:
 	void create_system(string str);
-
+	System::String^ matrix();
 
 
 

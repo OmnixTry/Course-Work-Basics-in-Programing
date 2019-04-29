@@ -202,6 +202,8 @@ namespace Project {
 		managedString += " variables\n";
 		richTextBox2->Text = managedString;
 
+		the_system.create_system(str);
+		richTextBox2->Text += the_system.matrix();
 		/*wstring str = richTextBox1->Text[1];
 		how_many_wariables(richTextBox1->Text);*/
 	}

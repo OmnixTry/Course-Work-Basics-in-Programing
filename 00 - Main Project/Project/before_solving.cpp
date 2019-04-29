@@ -8,6 +8,12 @@ bool is_letter(char letter) {
 	return false;
 }
 
+bool is_number(char symbol) {
+	if ((symbol >= '0') && (symbol <= '9'))
+		return true;
+	return false;
+}
+
 int how_many_wariables(string raw_system) {
 	string variables;
 	int how_many = 0;
