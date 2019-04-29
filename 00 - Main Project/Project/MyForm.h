@@ -1,4 +1,5 @@
 #pragma once
+#include "before_solving.h"
 
 namespace Project {
 
@@ -9,6 +10,7 @@ namespace Project {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	//friend void parce_system();
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>

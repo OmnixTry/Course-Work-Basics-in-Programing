@@ -1,4 +1,5 @@
 #include "MyForm.h"
+#include "system.h"
 using namespace System;
 using namespace System::Windows::Forms;
 [STAThreadAttribute]
