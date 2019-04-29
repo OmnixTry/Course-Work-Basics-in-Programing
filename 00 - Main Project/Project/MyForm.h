@@ -1,5 +1,11 @@
 #pragma once
+#include <string>
+#include <msclr\marshal_cppstd.h>;
 #include "before_solving.h"
+#include "system.h"
+//#include "stdafx.h"
+
+systema the_system;
 
 namespace Project {
 
@@ -44,6 +50,7 @@ namespace Project {
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::RichTextBox^  richTextBox2;
 	private: System::Windows::Forms::Label^  label3;
+			 
 	protected:
 
 	private:
@@ -71,6 +78,8 @@ namespace Project {
 			// 
 			// richTextBox1
 			// 
+			this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->richTextBox1->Location = System::Drawing::Point(72, 176);
 			this->richTextBox1->Name = L"richTextBox1";
 			this->richTextBox1->Size = System::Drawing::Size(262, 199);
@@ -124,6 +133,7 @@ namespace Project {
 			this->button1->TabIndex = 4;
 			this->button1->Text = L"Check Input";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
 			// button2
 			// 
@@ -138,6 +148,8 @@ namespace Project {
 			// 
 			// richTextBox2
 			// 
+			this->richTextBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->richTextBox2->Location = System::Drawing::Point(387, 176);
 			this->richTextBox2->Name = L"richTextBox2";
 			this->richTextBox2->Size = System::Drawing::Size(261, 199);
@@ -180,5 +192,18 @@ namespace Project {
 	}
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 	}
-	};
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		msclr::interop::marshal_context context;
+		std::string str = context.marshal_as<std::string>(richTextBox1->Text);
+		int how_many = how_many_wariables(str);
+
+		System::String^ managedString;
+		managedString += how_many;
+		managedString += " variables\n";
+		richTextBox2->Text = managedString;
+
+		/*wstring str = richTextBox1->Text[1];
+		how_many_wariables(richTextBox1->Text);*/
+	}
+};
 }

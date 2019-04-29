@@ -2,7 +2,7 @@
 #pragma once
 using namespace std;
 
-class system {
+class systema {
 private:
 	string variables;
 	int **arr;

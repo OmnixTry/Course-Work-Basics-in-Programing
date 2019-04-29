@@ -12,7 +12,7 @@ int how_many_wariables(string raw_system) {
 	string variables;
 	int how_many = 0;
 	for (int i = 0; i < raw_system.size(); i++) {
-		if ((variables.find(raw_system[i]) != string::npos) && is_letter(raw_system[i])) {
+		if ((variables.find(raw_system[i]) == string::npos) && is_letter(raw_system[i])) {
 			variables += raw_system[i];
 			how_many++;
 		}
