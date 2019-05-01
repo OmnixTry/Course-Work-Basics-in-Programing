@@ -47,6 +47,9 @@ void systema::create_system(string str) {
 			}
 		}
 		else if ((is_letter(str[i])) && (variables.find_first_of(str[i]) != string::npos)) {
+			if (cnumber == 0) {
+				cnumber = 1;
+			}
 			arr[row][variables.find_first_of(str[i])] = plus ? cnumber : cnumber * (-1);
 			cnumber = 0;
 			plus = true;
