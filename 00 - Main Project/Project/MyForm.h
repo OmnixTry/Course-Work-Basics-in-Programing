@@ -50,7 +50,8 @@ namespace Project {
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::RichTextBox^  richTextBox2;
 	private: System::Windows::Forms::Label^  label3;
-			 
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
+
 	protected:
 
 	private:
@@ -66,6 +67,9 @@ namespace Project {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^  series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -74,6 +78,8 @@ namespace Project {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// richTextBox1
@@ -104,7 +110,10 @@ namespace Project {
 			this->comboBox1->Font = (gcnew System::Drawing::Font(L"Times New Roman", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Метод Гаусса", L"Метод Жордана-Гаусса", L"Метод Обратной Матрицы" });
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+				L"Метод Гаусса", L"Метод Жордана-Гаусса", L"Метод Обратной Матрицы",
+					L"Графический Метод"
+			});
 			this->comboBox1->Location = System::Drawing::Point(167, 24);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(382, 39);
@@ -134,6 +143,7 @@ namespace Project {
 			this->button2->TabIndex = 5;
 			this->button2->Text = L"Solve The System ";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
 			// richTextBox2
 			// 
@@ -156,12 +166,32 @@ namespace Project {
 			this->label3->TabIndex = 7;
 			this->label3->Text = L"Output:";
 			// 
+			// chart1
+			// 
+			chartArea1->Name = L"ChartArea1";
+			this->chart1->ChartAreas->Add(chartArea1);
+			this->chart1->Location = System::Drawing::Point(373, 145);
+			this->chart1->Name = L"chart1";
+			series1->ChartArea = L"ChartArea1";
+			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series1->Name = L"line1";
+			series2->ChartArea = L"ChartArea1";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Line;
+			series2->Name = L"line2";
+			this->chart1->Series->Add(series1);
+			this->chart1->Series->Add(series2);
+			this->chart1->Size = System::Drawing::Size(307, 240);
+			this->chart1->TabIndex = 8;
+			this->chart1->Text = L"chart1";
+			this->chart1->Visible = false;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(707, 489);
+			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->richTextBox2);
 			this->Controls->Add(this->button2);
@@ -175,6 +205,7 @@ namespace Project {
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -199,5 +230,43 @@ namespace Project {
 		/*wstring str = richTextBox1->Text[1];
 		how_many_wariables(richTextBox1->Text);*/
 	}
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+	switch (comboBox1->SelectedIndex) {
+	case 0: break;
+	case 1: break;
+	case 2: break;
+	case 3:
+		if (the_system.number_of_variables() != 2) {
+			MessageBox::Show("This Method is Inapropriate", "error");
+			break;
+		}
+		else {
+			float kx1, b1, kx2, b2;
+			the_system.graphical_method(kx1, b1, kx2, b2);
+			chart1->Visible = true;
+			for (float i = -5; i < 5; i += (float)1) {
+				chart1->Series["line1"]->Points->AddXY(i, kx1*i + b1);
+				chart1->Series["line2"]->Points->AddXY(i, kx2*i + b2);
+			}
+			
+			
+			
+			
+			
+			break;
+		}
+	};
+	
+
+
+}
 };
 }
+
+
+
+/*	string result;
+	bool is_done = 	the_system.solve(comboBox1->SelectedIndex, result);
+	if (!is_done) {
+		MessageBox::Show("This Method is Inapropriate","error");
+	}*/

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string>
 #include <msclr\marshal_cppstd.h>
+//#include "system.h"
 //#include "MyForm.h"
 using namespace std;
 
@@ -10,6 +11,8 @@ void systema::create_system(string str) {
 	height = how_many_wariables(str);
 	length = height + 1;
 	// create the array of zeroes
+	if (arr != nullptr) delete[] arr;
+	
 	arr = new float*[height];
 	for (int i = 0; i < height; i++) {
 		arr[i] = new float[length];
@@ -19,6 +22,7 @@ void systema::create_system(string str) {
 			arr[i][j] = 0;
 
 	//getting the list of variables
+	variables = "";
 	for (int i = 0; i < str.size(); i++) {
 		if ((variables.find(str[i]) == string::npos) && is_letter(str[i])) {
 			variables += str[i];
@@ -103,11 +107,23 @@ System::String^ systema::matrix() {
 	return the_str;
 }
 
-/*for (int i = 0; i < height; i++) {
-	row = str.substr(0, str.find_first_of('\n'));
-	str.erase(0, str.find_first_of('\n') + 1);
+int systema::number_of_variables() {
+	return variables.size();
+}
 
-	do {
-		help = row.substr(0, );
-	} while (row.size() != 0);
+/*bool systema::solve(int selected_method, string &result) {
+	switch(selected_method) {
+	case 0: break;
+	case 1: break;
+	case 2: break;
+	case 3: 
+		if (variables.size() != 2) {
+			return false;
+		}
+		else {
+			this->graphical_method(); break;
+		}
+	};
+	return true;
 }*/
+
