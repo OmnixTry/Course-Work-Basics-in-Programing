@@ -5,13 +5,15 @@ using namespace std;
 class systema {
 private:
 	string variables;
-	float **arr;
+	double **arr;
 	int height;
 	int length;
 	
 	
 public:
-	void graphical_method(float &kx1, float &b1, float &kx2, float &b2);
+	string hauss_method();
+	string hauss_single_solution();
+	void graphical_method(double &kx1, double &b1, double &kx2, double &b2);
 	void create_system(string str);
 	System::String^ matrix();
 	int number_of_variables();

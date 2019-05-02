@@ -13,9 +13,9 @@ void systema::create_system(string str) {
 	// create the array of zeroes
 	if (arr != nullptr) delete[] arr;
 	
-	arr = new float*[height];
+	arr = new double*[height];
 	for (int i = 0; i < height; i++) {
-		arr[i] = new float[length];
+		arr[i] = new double[length];
 	}
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < length; j++)
@@ -35,7 +35,7 @@ void systema::create_system(string str) {
 	//string help;
 	bool plus = true; // shows is number positive or negative
 	bool coma = false; // shows presence of coma
-	float multiply_coma = 1;
+	double multiply_coma = 1;
 
 	str += "\n";
 
@@ -93,7 +93,7 @@ System::String^ systema::matrix() {
 			}
 			if(help[help.size()-1] == '.') help.erase(help.size() - 1);
 
-			while(help.size() <= 5){
+			while(help.size() <= 8){
 				help += " ";
 			}
 			msclr::interop::marshal_context context;

@@ -151,7 +151,7 @@ namespace Project {
 				static_cast<System::Byte>(204)));
 			this->richTextBox2->Location = System::Drawing::Point(373, 145);
 			this->richTextBox2->Name = L"richTextBox2";
-			this->richTextBox2->Size = System::Drawing::Size(307, 240);
+			this->richTextBox2->Size = System::Drawing::Size(431, 240);
 			this->richTextBox2->TabIndex = 6;
 			this->richTextBox2->Text = L"";
 			// 
@@ -180,17 +180,18 @@ namespace Project {
 			series2->Name = L"line2";
 			this->chart1->Series->Add(series1);
 			this->chart1->Series->Add(series2);
-			this->chart1->Size = System::Drawing::Size(307, 240);
+			this->chart1->Size = System::Drawing::Size(431, 240);
 			this->chart1->TabIndex = 8;
 			this->chart1->Text = L"chart1";
 			this->chart1->Visible = false;
+			this->chart1->Click += gcnew System::EventHandler(this, &MyForm::chart1_Click);
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(707, 489);
+			this->ClientSize = System::Drawing::Size(847, 489);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->richTextBox2);
@@ -232,7 +233,15 @@ namespace Project {
 	}
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	switch (comboBox1->SelectedIndex) {
-	case 0: break;
+	case -1:
+		MessageBox::Show("Choose the solving method!", "error");
+		break;
+	case 0: 
+		the_system.hauss_method();
+		richTextBox2->Text += "\nStairs Matrix\n";
+		richTextBox2->Text += the_system.matrix();
+		
+		break;
 	case 1: break;
 	case 2: break;
 	case 3:
@@ -241,24 +250,22 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 			break;
 		}
 		else {
-			float kx1, b1, kx2, b2;
+			double kx1, b1, kx2, b2;
 			the_system.graphical_method(kx1, b1, kx2, b2);
 			chart1->Visible = true;
-			for (float i = -5; i < 5; i += (float)1) {
+			for (double i = -5; i < 5; i += (double)1) {
 				chart1->Series["line1"]->Points->AddXY(i, kx1*i + b1);
 				chart1->Series["line2"]->Points->AddXY(i, kx2*i + b2);
 			}
-			
-			
-			
-			
-			
 			break;
 		}
 	};
 	
 
 
+}
+private: System::Void chart1_Click(System::Object^  sender, System::EventArgs^  e) {
+	chart1->Visible = false;
 }
 };
 }
