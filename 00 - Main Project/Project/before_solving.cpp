@@ -53,7 +53,7 @@ void upper_triangle_matrix(double **arr, int length, int height) {
 			}
 		}
 	}
-	system("pause");
+	//system("pause");
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < length; j++) {
 			cout << setw(8) << arr[i][j];

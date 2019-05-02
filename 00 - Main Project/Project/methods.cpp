@@ -28,9 +28,6 @@ string systema::hauss_single_solution() {
 
 	results[height - 1] = arr[height - 1][length - 1] / arr[height - 1][length - 2];
 
-
-
-
 	for (int i = height - 2; i >= 0; i--) {
 		cresult = 0;
 		for (int j = i + 1; j < length-1; j++) {
@@ -39,7 +36,15 @@ string systema::hauss_single_solution() {
 		cresult += arr[i][length - 1];
 		results[i] = cresult;
 	}
+	
+	string res_to_screen;
 
+	for (int i = 0; i < height; i++){
+		res_to_screen += variables[i];
+		res_to_screen += " = ";
+		res_to_screen += to_string(results[i]);
+		res_to_screen += "\n";
+	}
 
-
+	return res_to_screen;
 }

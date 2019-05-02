@@ -232,14 +232,19 @@ namespace Project {
 		how_many_wariables(richTextBox1->Text);*/
 	}
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+	string res;
+	msclr::interop::marshal_context context;
 	switch (comboBox1->SelectedIndex) {
 	case -1:
 		MessageBox::Show("Choose the solving method!", "error");
 		break;
 	case 0: 
-		the_system.hauss_method();
-		richTextBox2->Text += "\nStairs Matrix\n";
-		richTextBox2->Text += the_system.matrix();
+		res = the_system.hauss_method();
+		richTextBox2->Text += "\nThe Solution:\n";
+		richTextBox2->Text += context.marshal_as<System::String^>(res);
+		//richTextBox2->Text += "\nStairs Matrix\n";
+		//richTextBox2->Text += the_system.matrix();
+
 		
 		break;
 	case 1: break;
