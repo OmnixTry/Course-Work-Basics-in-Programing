@@ -13,11 +13,13 @@ private:
 public:
 	string hauss_method();
 	string hauss_single_solution();
+	string jordan_hauss_method();
+	string jordan_hauss_single_solution();
 	void graphical_method(double &kx1, double &b1, double &kx2, double &b2);
 	void create_system(string str);
 	System::String^ matrix();
 	int number_of_variables();
-	//bool solve(int selected_method, string &result);
+	
 	
 
 

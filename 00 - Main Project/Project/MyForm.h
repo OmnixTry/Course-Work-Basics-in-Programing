@@ -151,7 +151,7 @@ namespace Project {
 				static_cast<System::Byte>(204)));
 			this->richTextBox2->Location = System::Drawing::Point(373, 145);
 			this->richTextBox2->Name = L"richTextBox2";
-			this->richTextBox2->Size = System::Drawing::Size(431, 240);
+			this->richTextBox2->Size = System::Drawing::Size(308, 240);
 			this->richTextBox2->TabIndex = 6;
 			this->richTextBox2->Text = L"";
 			// 
@@ -180,7 +180,7 @@ namespace Project {
 			series2->Name = L"line2";
 			this->chart1->Series->Add(series1);
 			this->chart1->Series->Add(series2);
-			this->chart1->Size = System::Drawing::Size(431, 240);
+			this->chart1->Size = System::Drawing::Size(308, 240);
 			this->chart1->TabIndex = 8;
 			this->chart1->Text = L"chart1";
 			this->chart1->Visible = false;
@@ -191,7 +191,7 @@ namespace Project {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(847, 489);
+			this->ClientSize = System::Drawing::Size(727, 489);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->richTextBox2);
@@ -241,13 +241,12 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 	case 0: 
 		res = the_system.hauss_method();
 		richTextBox2->Text += "\nThe Solution:\n";
-		richTextBox2->Text += context.marshal_as<System::String^>(res);
-		//richTextBox2->Text += "\nStairs Matrix\n";
-		//richTextBox2->Text += the_system.matrix();
-
-		
+		richTextBox2->Text += context.marshal_as<System::String^>(res);		
 		break;
-	case 1: break;
+	case 1: 
+		res = the_system.jordan_hauss_method();
+		richTextBox2->Text += "\nThe Solution:\n";
+		richTextBox2->Text += context.marshal_as<System::String^>(res);
 	case 2: break;
 	case 3:
 		if (the_system.number_of_variables() != 2) {

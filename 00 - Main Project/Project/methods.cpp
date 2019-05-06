@@ -18,8 +18,9 @@ string systema::hauss_method() {
 	if (zero_row(arr, height) == -1) {
 		return this->hauss_single_solution();
 	}
-
-
+	else {
+		return"There's infinite nuber of solutions\n";
+	}
 }
 
 string systema::hauss_single_solution() {
@@ -47,4 +48,36 @@ string systema::hauss_single_solution() {
 	}
 
 	return res_to_screen;
+}
+
+string systema::jordan_hauss_method() {
+	upper_triangle_matrix(arr, length, height);
+
+	// number of variables = number of equations
+	if (zero_row(arr, height) == -1) {
+		return jordan_hauss_single_solution();
+	}
+	else {
+		return"There's infinite nuber of solutions\n";
+	}
+}
+
+string systema::jordan_hauss_single_solution() {
+	arr[height - 1][length - 1] /= arr[height - 1][length - 2];
+	arr[height - 1][length - 2] = 1;
+
+	for (int row = height - 1; row > 0; row--) {
+		for (int i = row - 1; i >= 0; i--) {
+			arr[i][length - 1] -= arr[row][length - 1] * arr[i][row];
+			arr[i][row] = 0;
+		}
+	}
+	string result;
+	for (int i = 0; i < height; i++) {
+		result += variables[i];
+		result += " = ";
+		result += to_string(arr[i][length - 1]);
+		result += "\n";
+	}
+	return result;
 }
