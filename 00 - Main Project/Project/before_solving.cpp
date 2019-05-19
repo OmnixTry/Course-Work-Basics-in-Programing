@@ -74,6 +74,48 @@ int zero_row(double **arr, int height) {
 	return -1;
 }
 
+int get_determinant(double **arr, int size) {
+	double **copy = new double*[size];
+	for (int i = 0; i < size; i++) {
+		copy[i] = new double[size];
+	}
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+			copy[i][j] = arr[i][j];
+
+	//coppied code fron upper triangle matrix;
+	double determinant = 1;
+	double *buff;
+	double multiplication;
+	for (int row = 0; row < size - 1; row++) {
+		for (int i = row; i < size; i++) {
+			if (copy[i][row] != 0) {
+				buff = copy[row];
+				copy[row] = copy[i];
+				copy[i] = buff;
+				break;
+			}
+		}
+		multiplication = copy[row][row];
+		determinant *= multiplication;
+		for (int i = row; i < (size); i++) {
+			copy[row][i] /= multiplication;
+		}
+
+		for (int i = row + 1; i < size; i++) {
+			multiplication = copy[i][row];
+			for (int j = row; j < size; j++) {
+				copy[i][j] -= (copy[row][j])*multiplication;
+			}
+		}
+	}
+	multiplication *= copy[size - 1][size - 1];
+	for (int i = 0; i < size; i++) {
+		delete[] copy[i];
+	}
+	delete[]copy;
+	return determinant;
+}
 
 
 
