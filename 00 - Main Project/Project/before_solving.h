@@ -2,6 +2,7 @@
 #include <string>
 using namespace std;
 
+int how_many_equations(string raw_system);
 int how_many_wariables(string raw_system);
 bool is_letter(char letter);
 bool is_number(char symbol);

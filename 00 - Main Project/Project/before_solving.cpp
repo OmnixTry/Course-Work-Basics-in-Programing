@@ -117,6 +117,18 @@ int get_determinant(double **arr, int size) {
 	return determinant;
 }
 
+int how_many_equations(string raw_system) {
+	int counter = 0;
+	if (raw_system[raw_system.size() - 1] != '\n') {
+		raw_system += '\n';
+	}
+	for (int i = 0; i < raw_system.size(); i++) {
+		if (raw_system[i] == '\n') {
+			counter++;
+		}
+	}
+	return counter;
+}
 
 
 /*

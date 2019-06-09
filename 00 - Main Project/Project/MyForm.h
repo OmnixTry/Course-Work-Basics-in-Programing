@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <fstream>
 #include <msclr\marshal_cppstd.h>;
 #include "before_solving.h"
 #include "system.h"
@@ -51,6 +52,8 @@ namespace Project {
 	private: System::Windows::Forms::RichTextBox^  richTextBox2;
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Button^  button3;
 
 	protected:
 
@@ -79,12 +82,14 @@ namespace Project {
 			this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// richTextBox1
 			// 
-			this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->richTextBox1->Location = System::Drawing::Point(39, 145);
 			this->richTextBox1->Name = L"richTextBox1";
@@ -111,7 +116,7 @@ namespace Project {
 				static_cast<System::Byte>(204)));
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"Метод Гаусса", L"Метод Жордана-Гаусса", L"Метод Обратной Матрицы",
+				L"Метод Гаусса", L"Метод Жордана-Гаусса", L"Метод Вращения",
 					L"Графический Метод"
 			});
 			this->comboBox1->Location = System::Drawing::Point(167, 24);
@@ -186,12 +191,36 @@ namespace Project {
 			this->chart1->Visible = false;
 			this->chart1->Click += gcnew System::EventHandler(this, &MyForm::chart1_Click);
 			// 
+			// textBox1
+			// 
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Times New Roman", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBox1->Location = System::Drawing::Point(109, 502);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(238, 32);
+			this->textBox1->TabIndex = 9;
+			this->textBox1->Text = L"filename";
+			// 
+			// button3
+			// 
+			this->button3->Font = (gcnew System::Drawing::Font(L"Times New Roman", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button3->Location = System::Drawing::Point(399, 489);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(150, 51);
+			this->button3->TabIndex = 10;
+			this->button3->Text = L"Save to file";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(727, 489);
+			this->ClientSize = System::Drawing::Size(727, 583);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->richTextBox2);
@@ -220,16 +249,23 @@ namespace Project {
 		msclr::interop::marshal_context context;
 		std::string str = context.marshal_as<std::string>(richTextBox1->Text);
 		int how_many = how_many_wariables(str);
-
+		int aquations = how_many_equations(str);
 		System::String^ managedString;
-		managedString += how_many;
-		managedString += " variables\n";
-		richTextBox2->Text = managedString;
+		if (how_many == aquations) {
 
-		the_system.create_system(str);
-		richTextBox2->Text += the_system.matrix();
-		/*wstring str = richTextBox1->Text[1];
-		how_many_wariables(richTextBox1->Text);*/
+			
+			managedString += how_many;
+			managedString += " variables\n";
+			richTextBox2->Text = managedString;
+
+			the_system.create_system(str);
+			richTextBox2->Text += the_system.matrix();
+			/*wstring str = richTextBox1->Text[1];
+			how_many_wariables(richTextBox1->Text);*/
+		}
+		else {
+			richTextBox2->Text = "Number of equations is not equel to number of variables\n";
+		}
 	}
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	string res;
@@ -247,17 +283,23 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 		res = the_system.jordan_hauss_method();
 		richTextBox2->Text += "\nThe Solution:\n";
 		richTextBox2->Text += context.marshal_as<System::String^>(res);
-	case 2: break;
+	case 2: 
+		res = the_system.rotation_method();
+		richTextBox2->Text += "\nThe Solution:\n";
+		richTextBox2->Text += context.marshal_as<System::String^>(res);		
+		break;
 	case 3:
 		if (the_system.number_of_variables() != 2) {
 			MessageBox::Show("This Method is Inapropriate", "error");
 			break;
 		}
 		else {
+			//strin
 			double kx1, b1, kx2, b2;
 			the_system.graphical_method(kx1, b1, kx2, b2);
+			int resultx = the_system.hauss_method(1);
 			chart1->Visible = true;
-			for (double i = -5; i < 5; i += (double)1) {
+			for (double i = resultx-5; i < resultx+5; i += (double)1) {
 				chart1->Series["line1"]->Points->AddXY(i, kx1*i + b1);
 				chart1->Series["line2"]->Points->AddXY(i, kx2*i + b2);
 			}
@@ -270,6 +312,17 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 }
 private: System::Void chart1_Click(System::Object^  sender, System::EventArgs^  e) {
 	chart1->Visible = false;
+}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	msclr::interop::marshal_context context;
+	std::string fname = context.marshal_as<std::string>(textBox1->Text);
+	if (fname.find(".txt") == string::npos) {
+		fname += ".txt";
+	}
+	std::string text = context.marshal_as<std::string>(richTextBox2->Text);
+	ofstream the_file(fname, ios::trunc);
+	the_file << text;
+	MessageBox::Show("Saved succesfully!!", "YEEEEyy");
 }
 };
 }
