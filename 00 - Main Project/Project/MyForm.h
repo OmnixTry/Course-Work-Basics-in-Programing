@@ -260,8 +260,7 @@ namespace Project {
 
 			the_system.create_system(str);
 			richTextBox2->Text += the_system.matrix();
-			/*wstring str = richTextBox1->Text[1];
-			how_many_wariables(richTextBox1->Text);*/
+			
 		}
 		else {
 			richTextBox2->Text = "Number of equations is not equel to number of variables\n";
